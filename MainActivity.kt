@@ -109,9 +109,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
-        window.statusBarColor = Color.parseColor("#0B1120")
-        window.navigationBarColor = Color.parseColor("#0B1120")
+        window.decorView.setLayoutDirection(View.LAYOUT_DIRECTION_RTL)
+        window.setStatusBarColor(Color.parseColor("#0B1120"))
+        window.setNavigationBarColor(Color.parseColor("#0B1120"))
         prefs = getSharedPreferences("radio_sync", Context.MODE_PRIVATE)
         processor = DelayAudioProcessor()
         buildUi()
@@ -134,30 +134,30 @@ class MainActivity : AppCompatActivity() {
 
     private fun card(): LinearLayout {
         val l = LinearLayout(this)
-        l.orientation = LinearLayout.VERTICAL
+        l.setOrientation(LinearLayout.VERTICAL)
         l.setPadding(dp(16), dp(14), dp(16), dp(14))
         val g = GradientDrawable()
         g.cornerRadius = dp(18).toFloat()
         g.setColor(Color.parseColor("#131C31"))
         g.setStroke(dp(1), Color.parseColor("#1E293B"))
-        l.background = g
+        l.setBackground(g)
         val lp = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         lp.bottomMargin = dp(12)
-        l.layoutParams = lp
+        l.setLayoutParams(lp)
         return l
     }
 
     private fun label(text: String, size: Float = 14f, color: String = "#94A3B8", bold: Boolean = false): TextView {
         val t = TextView(this)
-        t.text = text
+        t.setText(text)
         t.setTextColor(Color.parseColor(color))
-        t.textSize = size
+        t.setTextSize(size)
         if (bold) t.setTypeface(null, Typeface.BOLD)
-        t.textDirection = View.TEXT_DIRECTION_RTL
-        t.gravity = Gravity.RIGHT
+        t.setTextDirection(View.TEXT_DIRECTION_RTL)
+        t.setGravity(Gravity.RIGHT)
         return t
     }
 
@@ -170,16 +170,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun button(text: String, bg: String = "#10B981", fg: String = "#04120C"): Button {
         val b = Button(this)
-        b.text = text
-        b.textSize = 15f
+        b.setText(text)
+        b.setTextSize(15f)
         b.setTextColor(Color.parseColor(fg))
         b.setTypeface(null, Typeface.BOLD)
         b.isAllCaps = false
         val g = GradientDrawable()
         g.cornerRadius = dp(14).toFloat()
         g.setColor(Color.parseColor(bg))
-        b.background = g
-        b.stateListAnimator = null
+        b.setBackground(g)
+        b.setStateListAnimator(null)
         b.minHeight = 0
         b.minimumHeight = 0
         b.setPadding(dp(12), dp(10), dp(12), dp(10))
@@ -196,24 +196,24 @@ class MainActivity : AppCompatActivity() {
     private fun buildUi() {
         val scroll = ScrollView(this)
         scroll.setBackgroundColor(Color.parseColor("#0B1120"))
-        scroll.isFillViewport = true // تم تصحيح الخطأ هنا
-        scroll.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        scroll.isFillViewport = true
+        scroll.setLayoutDirection(View.LAYOUT_DIRECTION_RTL)
 
         val root = LinearLayout(this)
-        root.orientation = LinearLayout.VERTICAL
+        root.setOrientation(LinearLayout.VERTICAL)
         root.setPadding(dp(16), dp(18), dp(16), dp(28))
         scroll.addView(root)
         setContentView(scroll)
 
         val title = label("مزامنة الراديو مع الصورة", 22f, "#F8FAFC", true)
-        title.gravity = Gravity.CENTER
+        title.setGravity(Gravity.CENTER)
         root.addView(title, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
 
         val subtitle = label("تأخير حتى 120 ثانية • بث مباشر", 13f, "#64748B")
-        subtitle.gravity = Gravity.CENTER
+        subtitle.setGravity(Gravity.CENTER)
         val slp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         slp.bottomMargin = dp(14)
-        subtitle.layoutParams = slp
+        subtitle.setLayoutParams(slp)
         root.addView(subtitle)
 
         // ===== Status Card =====
@@ -228,7 +228,7 @@ class MainActivity : AppCompatActivity() {
         tvDelayReadout.setPadding(0, dp(6), 0, 0)
         statusCard.addView(tvDelayReadout)
         tvConfidence = label("", 12f, "#10B981", true)
-        tvConfidence.visibility = View.GONE
+        tvConfidence.setVisibility(View.GONE)
         statusCard.addView(tvConfidence)
         root.addView(statusCard)
 
@@ -236,24 +236,24 @@ class MainActivity : AppCompatActivity() {
         val streamCard = card()
         streamCard.addView(label("رابط البث", 13f, "#94A3B8", true))
         etUrl = EditText(this)
-        etUrl.hint = "http://example.com:8080/live"
+        etUrl.setHint("http://example.com:8080/live")
         etUrl.setTextColor(Color.WHITE)
         etUrl.setHintTextColor(Color.parseColor("#475569"))
-        etUrl.textSize = 14f
-        etUrl.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI
-        etUrl.textDirection = View.TEXT_DIRECTION_LTR
-        etUrl.gravity = Gravity.LEFT
+        etUrl.setTextSize(14f)
+        etUrl.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI)
+        etUrl.setTextDirection(View.TEXT_DIRECTION_LTR)
+        etUrl.setGravity(Gravity.LEFT)
         etUrl.setSingleLine(true)
         val eg = GradientDrawable()
         eg.cornerRadius = dp(12).toFloat()
         eg.setColor(Color.parseColor("#0B1120"))
         eg.setStroke(dp(1), Color.parseColor("#334155"))
-        etUrl.background = eg
+        etUrl.setBackground(eg)
         etUrl.setPadding(dp(12), dp(10), dp(12), dp(10))
         val elp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         elp.topMargin = dp(6)
         elp.bottomMargin = dp(8)
-        etUrl.layoutParams = elp
+        etUrl.setLayoutParams(elp)
         streamCard.addView(etUrl)
 
         btnPlay = button("تشغيل")
@@ -263,7 +263,7 @@ class MainActivity : AppCompatActivity() {
         val hscroll = HorizontalScrollView(this)
         hscroll.isHorizontalScrollBarEnabled = false
         savedRow = LinearLayout(this)
-        savedRow.orientation = LinearLayout.HORIZONTAL
+        savedRow.setOrientation(LinearLayout.HORIZONTAL)
         hscroll.addView(savedRow)
         val hlp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         hlp.topMargin = dp(8)
@@ -274,7 +274,7 @@ class MainActivity : AppCompatActivity() {
         val measureCard = card()
         measureCard.addView(label("فحص التأخير الصوتي", 13f, "#94A3B8", true))
         btnMeasure = button("فحص التأخير", "#10B981")
-        btnMeasure.textSize = 18f
+        btnMeasure.setTextSize(18f)
         btnMeasure.setOnClickListener { startMeasurement() }
         val mlp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         mlp.topMargin = dp(8)
@@ -283,36 +283,36 @@ class MainActivity : AppCompatActivity() {
 
         measureCard.addView(label("مدة الفحص", 12f, "#64748B"))
         durationRow = LinearLayout(this)
-        durationRow.orientation = LinearLayout.HORIZONTAL
-        durationRow.gravity = Gravity.CENTER
+        durationRow.setOrientation(LinearLayout.HORIZONTAL)
+        durationRow.setGravity(Gravity.CENTER)
         measureCard.addView(durationRow, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
         buildDurationChips()
 
         progressMeasure = ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal)
-        progressMeasure.max = 100
-        progressMeasure.progress = 0
-        progressMeasure.progressTintList = ColorStateList.valueOf(Color.parseColor("#10B981"))
-        progressMeasure.visibility = View.GONE
+        progressMeasure.setMax(100)
+        progressMeasure.setProgress(0)
+        progressMeasure.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#10B981")))
+        progressMeasure.setVisibility(View.GONE)
         val plp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(6))
         plp.topMargin = dp(10)
         measureCard.addView(progressMeasure, plp)
 
         tvCountdown = label("", 13f, "#10B981", true)
-        tvCountdown.visibility = View.GONE
+        tvCountdown.setVisibility(View.GONE)
         measureCard.addView(tvCountdown)
         root.addView(measureCard)
 
         // ===== 3 Action Buttons =====
         val actions = LinearLayout(this)
-        actions.orientation = LinearLayout.HORIZONTAL
-        actions.gravity = Gravity.CENTER
+        actions.setOrientation(LinearLayout.HORIZONTAL)
+        actions.setGravity(Gravity.CENTER)
         actions.weightSum = 3f
         val alp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         alp.bottomMargin = dp(12)
-        actions.layoutParams = alp
+        actions.setLayoutParams(alp)
 
         val btnSync = button("زامن الآن", "#10B981")
-        btnSync.textSize = 13f
+        btnSync.setTextSize(13f)
         btnSync.setOnClickListener {
             val pd = pendingDelaySeconds
             if (pendingNegativeTvAhead != null) {
@@ -327,15 +327,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnMute = button("صوت القناة", "#1E293B", "#E2E8F0")
-        btnMute.textSize = 13f
+        btnMute.setTextSize(13f)
         btnMute.setOnClickListener {
             val p = processor ?: return@setOnClickListener
             p.muted = !p.muted
-            btnMute.text = if (p.muted) "إلغاء الكتم" else "صوت القناة"
+            btnMute.setText(if (p.muted) "إلغاء الكتم" else "صوت القناة")
         }
 
         val btnReset = button("إيقاف المزامنة", "#7F1D1D", "#FEE2E2")
-        btnReset.textSize = 13f
+        btnReset.setTextSize(13f)
         btnReset.setOnClickListener {
             setDelay(0.0)
             pendingDelaySeconds = null
@@ -354,17 +354,17 @@ class MainActivity : AppCompatActivity() {
         val manual = card()
         manual.addView(label("الضبط اليدوي للتأخير", 13f, "#94A3B8", true))
         tvBigDelay = label("0.00 ث", 40f, "#10B981", true)
-        tvBigDelay.gravity = Gravity.CENTER
+        tvBigDelay.setGravity(Gravity.CENTER)
         manual.addView(tvBigDelay, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
         tvDetectedInfo = label("لم يتم الفحص بعد", 12f, "#64748B")
-        tvDetectedInfo.gravity = Gravity.CENTER
+        tvDetectedInfo.setGravity(Gravity.CENTER)
         manual.addView(tvDetectedInfo, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
 
         seekDelay = SeekBar(this)
-        seekDelay.max = 480
-        seekDelay.progress = 0
-        seekDelay.progressTintList = ColorStateList.valueOf(Color.parseColor("#10B981"))
-        seekDelay.thumbTintList = ColorStateList.valueOf(Color.parseColor("#10B981"))
+        seekDelay.setMax(480)
+        seekDelay.setProgress(0)
+        seekDelay.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#10B981")))
+        seekDelay.setThumbTintList(ColorStateList.valueOf(Color.parseColor("#10B981")))
         seekDelay.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) setDelay(progress / 4.0)
@@ -383,18 +383,18 @@ class MainActivity : AppCompatActivity() {
             "+10 ث" to 10.0
         )
         val nrow = LinearLayout(this)
-        nrow.orientation = LinearLayout.HORIZONTAL
-        nrow.gravity = Gravity.CENTER
+        nrow.setOrientation(LinearLayout.HORIZONTAL)
+        nrow.setGravity(Gravity.CENTER)
         for ((txt, delta) in nudges) {
             val b = Button(this)
-            b.text = txt
-            b.textSize = 11f
+            b.setText(txt)
+            b.setTextSize(11f)
             b.setTextColor(Color.parseColor("#E2E8F0"))
             b.isAllCaps = false
             b.minWidth = 0
             b.minimumWidth = 0
             b.setPadding(dp(4), dp(6), dp(4), dp(6))
-            b.background = pillBg()
+            b.setBackground(pillBg())
             b.setOnClickListener {
                 val current = processor?.delaySeconds ?: 0.0
                 setDelay(current + delta)
@@ -410,8 +410,8 @@ class MainActivity : AppCompatActivity() {
         durationButtons.clear()
         for (d in durationOptions) {
             val b = Button(this)
-            b.text = "$d ث"
-            b.textSize = 12f
+            b.setText("$d ث")
+            b.setTextSize(12f)
             b.isAllCaps = false
             b.minWidth = 0
             b.minimumWidth = 0
@@ -431,10 +431,10 @@ class MainActivity : AppCompatActivity() {
             val b = durationButtons.getOrNull(i) ?: continue
             if (d == selectedDuration) {
                 b.setTextColor(Color.parseColor("#04120C"))
-                b.background = pillBg("#10B981")
+                b.setBackground(pillBg("#10B981"))
             } else {
                 b.setTextColor(Color.parseColor("#94A3B8"))
-                b.background = pillBg("#1E293B")
+                b.setBackground(pillBg("#1E293B"))
             }
         }
     }
@@ -451,13 +451,13 @@ class MainActivity : AppCompatActivity() {
         val set = prefs.getStringSet("saved_urls", emptySet()) ?: emptySet()
         for (u in set.take(8)) {
             val b = Button(this)
-            b.text = hostOf(u)
-            b.textSize = 11f
+            b.setText(hostOf(u))
+            b.setTextSize(11f)
             b.isAllCaps = false
             b.minWidth = 0
             b.minimumWidth = 0
             b.setTextColor(Color.parseColor("#94A3B8"))
-            b.background = pillBg("#0B1120")
+            b.setBackground(pillBg("#0B1120"))
             b.setPadding(dp(10), dp(6), dp(10), dp(6))
             b.setOnClickListener { etUrl.setText(u) }
             val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -474,7 +474,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setStatus(msg: String, color: String) {
         safeUi {
-            tvStatus.text = msg
+            tvStatus.setText(msg)
             tvStatus.setTextColor(Color.parseColor(color))
         }
     }
@@ -490,40 +490,40 @@ class MainActivity : AppCompatActivity() {
         if (!::tvBuffered.isInitialized) return
         val proc = processor ?: return
         val buffered = proc.bufferedSeconds
-        tvBuffered.text = String.format(Locale.US, "المخزون: %.0f ث", buffered)
+        tvBuffered.setText(String.format(Locale.US, "المخزون: %.0f ث", buffered))
         val audioDelay = proc.delaySeconds
         val pd = pendingDelaySeconds
         val picText = if (pd == null) "—" else String.format(Locale.US, "%.1f", pd)
-        tvDelayReadout.text = "الصورة $picText ث • الصوت ${String.format(Locale.US, "%.2f", audioDelay)} ث"
+        tvDelayReadout.setText("الصورة $picText ث • الصوت ${String.format(Locale.US, "%.2f", audioDelay)} ث")
 
         if (pendingConfidence > 0) {
-            tvConfidence.visibility = View.VISIBLE
-            tvConfidence.text = "الثقة: $pendingConfidence%"
+            tvConfidence.setVisibility(View.VISIBLE)
+            tvConfidence.setText("الثقة: $pendingConfidence%")
         } else {
-            tvConfidence.visibility = View.GONE
+            tvConfidence.setVisibility(View.GONE)
         }
 
         if (!seekDelay.isPressed) {
             val prog = (audioDelay * 4).roundToInt().coerceIn(0, 480)
-            if (seekDelay.progress != prog) seekDelay.progress = prog
+            if (seekDelay.progress != prog) seekDelay.setProgress(prog)
         }
-        tvBigDelay.text = String.format(Locale.US, "%.2f ث", audioDelay)
+        tvBigDelay.setText(String.format(Locale.US, "%.2f ث", audioDelay))
 
         val ahead = pendingNegativeTvAhead
-        tvDetectedInfo.text = when {
+        tvDetectedInfo.setText(when {
             ahead != null -> "التلفاز متقدم عن الراديو بـ ${String.format(Locale.US, "%.1f", ahead)} ث — التأخير 0"
             pd != null -> "التأخير المكتشف: ${String.format(Locale.US, "%.2f", pd)} ث (الثقة $pendingConfidence%)"
             else -> "لم يتم الفحص بعد"
-        }
-        btnMute.text = if (proc.muted) "إلغاء الكتم" else "صوت القناة"
+        })
+        btnMute.setText(if (proc.muted) "إلغاء الكتم" else "صوت القناة")
     }
 
     private fun setDelay(d: Double) {
         val clamped = d.coerceIn(0.0, 120.0)
         processor?.delaySeconds = clamped
         val progress = (clamped * 4).roundToInt().coerceIn(0, 480)
-        if (seekDelay.progress != progress) seekDelay.progress = progress
-        tvBigDelay.text = String.format(Locale.US, "%.2f ث", clamped)
+        if (seekDelay.progress != progress) seekDelay.setProgress(progress)
+        tvBigDelay.setText(String.format(Locale.US, "%.2f ث", clamped))
         updateLiveUi()
     }
 
@@ -640,8 +640,8 @@ class MainActivity : AppCompatActivity() {
                     playing = isPlaying
                     if (isPlaying) {
                         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-                        btnPlay.text = "إيقاف"
-                        btnPlay.background = pillBg("#7F1D1D")
+                        btnPlay.setText("إيقاف")
+                        btnPlay.setBackground(pillBg("#7F1D1D"))
                         btnPlay.setTextColor(Color.parseColor("#FEE2E2"))
                     } else {
                         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -655,8 +655,8 @@ class MainActivity : AppCompatActivity() {
         p.prepare()
         p.playWhenReady = true
         playing = true
-        btnPlay.text = "إيقاف"
-        btnPlay.background = pillBg("#7F1D1D")
+        btnPlay.setText("إيقاف")
+        btnPlay.setBackground(pillBg("#7F1D1D"))
         btnPlay.setTextColor(Color.parseColor("#FEE2E2"))
         setStatus("جارٍ الاتصال...", "#F59E0B")
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -689,8 +689,8 @@ class MainActivity : AppCompatActivity() {
 
         if (updateUi) {
             safeUi {
-                btnPlay.text = "تشغيل"
-                btnPlay.background = pillBg("#10B981")
+                btnPlay.setText("تشغيل")
+                btnPlay.setBackground(pillBg("#10B981"))
                 btnPlay.setTextColor(Color.parseColor("#04120C"))
                 setStatus("متوقف", "#94A3B8")
                 window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -731,10 +731,10 @@ class MainActivity : AppCompatActivity() {
         val duration = selectedDuration
         val totalSamples = duration * 50
 
-        progressMeasure.visibility = View.VISIBLE
-        progressMeasure.progress = 0
-        tvCountdown.visibility = View.VISIBLE
-        tvCountdown.text = "جارٍ الفحص... 0/$duration ث"
+        progressMeasure.setVisibility(View.VISIBLE)
+        progressMeasure.setProgress(0)
+        tvCountdown.setVisibility(View.VISIBLE)
+        tvCountdown.setText("جارٍ الفحص... 0/$duration ث")
         btnMeasure.isEnabled = false
         btnMeasure.alpha = 0.5f
 
@@ -798,8 +798,8 @@ class MainActivity : AppCompatActivity() {
                             val progress = idx * 100 / totalSamples
                             val sec = idx / 50
                             safeUi {
-                                progressMeasure.progress = progress
-                                tvCountdown.text = "جارٍ الفحص... $sec/$duration ث"
+                                progressMeasure.setProgress(progress)
+                                tvCountdown.setText("جارٍ الفحص... $sec/$duration ث")
                             }
                         }
                     }
@@ -815,8 +815,8 @@ class MainActivity : AppCompatActivity() {
                     measuring = false
                     btnMeasure.isEnabled = true
                     btnMeasure.alpha = 1f
-                    progressMeasure.visibility = View.GONE
-                    tvCountdown.visibility = View.GONE
+                    progressMeasure.setVisibility(View.GONE)
+                    tvCountdown.setVisibility(View.GONE)
                 }
 
                 if (!measurementAborted) {
