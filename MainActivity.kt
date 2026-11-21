@@ -196,7 +196,8 @@ class MainActivity : AppCompatActivity() {
     private fun buildUi() {
         val scroll = ScrollView(this)
         scroll.setBackgroundColor(Color.parseColor("#0B1120"))
-        scroll.fillViewport = true
+        scroll.isFillViewport = true // تم تصحيح الخطأ هنا
+        scroll.layoutDirection = View.LAYOUT_DIRECTION_RTL
 
         val root = LinearLayout(this)
         root.orientation = LinearLayout.VERTICAL
@@ -981,7 +982,7 @@ class DelayAudioProcessor : BaseAudioProcessor() {
     private val envLock = Any()
     private val envHistory = FloatArray(ENV_CAPACITY)
     private var envWrite = 0
-    private var envTotalCount = 0L
+    private var envTotalCount: Long = 0L
     private var envAccum = 0.0
     private var envCount = 0
     private var prevEnv = 0.0
